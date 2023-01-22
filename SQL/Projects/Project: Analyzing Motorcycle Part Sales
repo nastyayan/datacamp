@@ -1,0 +1,8 @@
+!!DO NOT FORGET TO USE RTRIM FUNCTION FOR TO_CHAR FUNCTION AS DATACAMP DOES NOT ACCEPT ANSWER WITH TRAILING SPACES!!
+
+SELECT product_line, rtrim(to_char(date, 'Month')) as month, warehouse,
+round(sum(total*(1-payment_fee))::numeric,2) as net_revenue
+FROM sales
+where client_type='Wholesale'
+group by product_line, month, warehouse
+order by product_line, month, net_revenue desc;
