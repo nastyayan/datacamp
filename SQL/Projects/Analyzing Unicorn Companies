@@ -1,0 +1,31 @@
+Link:
+https://app.datacamp.com/learn/projects/1574
+
+Description:
+Motorcycles—cool! SQL skills—definitely cool! This project allows you to combine both—very cool!
+Working on behalf of a company that sells motorcycle parts, you'll dig into their data to help them understand their revenue streams. 
+You'll build up a query to find out how much net revenue they are generating across their product lines, segregating by date and warehouse.
+
+Solution:
+with cte as (
+SELECT industry, extract('year' from date_joined) as year,
+count(*) as num_unicorns, round(avg(valuation)/1000000000,2) as average_valuation_billions
+from dates
+join funding using(company_id)
+join industries using(company_id)
+where extract('year' from date_joined) in ('2019', '2020', '2021')
+group by industry, year
+)
+select *
+from cte
+where industry in (
+select industry
+from (
+select industry, sum(num_unicorns) as s
+from cte
+group by industry
+order by s desc
+limit 3
+) t
+)
+order by industry, year desc
