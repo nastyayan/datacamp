@@ -1,0 +1,35 @@
+Link:
+https://projects.datacamp.com/projects/1579
+
+Description:
+
+Does going to university in a different country affect your mental health? A Japanese international university surveyed its students in 2018 and published a study the following year that was approved by several ethical and regulatory boards.
+
+The study found that international students have a higher risk of mental health difficulties than the general population. Explore the students data using PostgreSQL to find out if this is true and see if the length of stay is a contributing factor.
+
+Here is a data description of the columns you may find helpful.
+
+Field Name	Description
+inter_dom	Types of students
+japanese_cate	Japanese language proficiency
+english_cate	English language proficiency
+academic	Current academic level
+age	Current age of student
+stay	Current length of stay in years
+todep	Total score of depression (PHQ-9 test)
+tosc	Total score of social connectedness (SCS test)
+toas	Total score of Acculturative Stress (ASISS test)
+
+First, explore the students data to see how the study reached its conclusions and gain a better understanding of it. Do this by writing a query to see how the students are categorized and scored. Consider using aggregate function calls to check the summary statistics of each student group - international and domestic.
+
+With the information you've gained, write a new query to see how the length of stay of an international student impacts the average diagnostic scores rounded to two decimal places. Order the results by descending order of the length of stay, and remember to use aliases!
+
+The final output of your query with aliases will have a total nine observation rows and four columns: stay, average_phq, average_scs, and average_as.
+
+Solution:
+
+SELECT stay, round(avg(todep),2) as average_phq, round(avg(tosc),2) as average_scs, round(avg(toas),2) as average_as
+FROM students
+where stay is not null and inter_dom = 'Inter'
+group by stay
+order by stay desc;
