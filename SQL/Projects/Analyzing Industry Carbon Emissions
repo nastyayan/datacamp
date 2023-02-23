@@ -1,0 +1,36 @@
+Link:
+https://projects.datacamp.com/projects/1590
+
+Description:
+Product emissions make up more than 75% of global emissions. But which industries are the worst offenders?
+
+Use this dataset alongside your Intermediate SQL skills to find out!
+
+Greenhouse gas emissions attributable to products—from food to sneakers to appliances—make up more than 75% of global emissions. -The Carbon Catalogue
+
+Our data, which is publicly availably on nature.com, contains product carbon footprints (PCFs) for various companies. PCFs are the greenhouse gas emissions attributable to a given product, measured in CO2 (carbon dioxide equivalent).
+
+This data is stored in a PostgreSQL database containing one table, prouduct_emissions, which looks at PCFs by product as well as the stage of production these emissions occured in. Here's a snapshot of what product_emissions contains in each column:
+
+product_emissions
+
+field	data_type
+id	VARCHAR
+year	INT
+product_name	VARCHAR
+company	VARCHAR
+country	VARCHAR
+industry_group	VARCHAR
+weight_kg	NUMERIC
+carbon_footprint_pcf	NUMERIC
+upstream_percent_total_pcf	VARCHAR
+operations_percent_total_pcf	VARCHAR
+downstream_percent_total_pcf	VARCHAR
+You'll use this data to examine the carbon footprint of each industry in the dataset!
+
+Solution:
+SELECT industry_group, count(company) as count_industry, round(sum(carbon_footprint_pcf),1) as total_industry_footprint
+FROM product_emissions
+where year=2017
+group by industry_group
+order by total_industry_footprint desc;
